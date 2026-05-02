@@ -6,7 +6,7 @@ import speedtest
 
 csv_filename = "speedtest_log.csv"
 interval_seconds = 30  # Wait 30 seconds between tests
-total_duration_seconds = 240 * 60  # Run for exactly 2 minutes total
+total_duration_seconds = 4 * 60 * 60  # Run for exactly 4 Hours total
 
 
 def log_speed():
