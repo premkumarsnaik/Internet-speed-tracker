@@ -5,108 +5,125 @@ A Python-based automation tool designed to monitor and log local network perform
 ---
 
 ## 📋 1. Prerequisites & Environment Check
+
 Before running the project, verify that your system has the correct tools installed.
 
 | Command | Purpose |
-| :--- | :--- |
+|--------|--------|
 | `python3 --version` | Ensures Python 3.x is installed |
-| `git --version` | Ensures Git is installed for syncing |
+| `git --version` | Ensures Git is installed |
 
 ---
 
 ## 🛠 2. First-Time Setup (Local Machine)
-If you are starting on a new computer, follow these steps to prepare the environment:
 
-### Clone the Repo
-```bash
-git clone https://github.com/premkumarsnaik/Internet-speed-tracker.git
-cd Internet-speed-tracker
-Create Virtual Environment
+If you are starting on a new computer, follow these steps:
 
-(Essential on macOS to avoid "Externally Managed Environment" errors)
+### Clone the Repository
 
-python3 -m venv .venv
-Activate & Install Dependencies
-source .venv/bin/activate
-python3 setup.py
+    git clone https://github.com/premkumarsnaik/Internet-speed-tracker.git
+    cd Internet-speed-tracker
 
+### Create Virtual Environment
 
-🔄 3. Synchronizing Code (GitHub ↔ Local)
-A. Pulling (GitHub Web → Local Machine)
+    python3 -m venv .venv
 
-If you edited code on GitHub and want it locally:
+### Activate Environment & Install Dependencies
 
-git pull origin main
-B. Pushing (Local Machine → GitHub Web)
+    source .venv/bin/activate
+    python3 setup.py
 
-To upload latest script or logs:
+---
 
-git add tracker.py speedtest_log.csv
-git commit -m "Update tracker settings and upload latest logs"
-git push origin main
+## 🔄 3. Synchronizing Code (GitHub ↔ Local)
 
+### Pull (GitHub → Local)
 
-🏃 4. Execution Workflow
-Navigate & Activate
-cd Internet-speed-tracker
-source .venv/bin/activate
-Launch Tracker
-python3 tracker.py
-Stop Tracker
+    git pull origin main
+
+### Push (Local → GitHub)
+
+    git add tracker.py speedtest_log.csv
+    git commit -m "Update tracker settings and upload latest logs"
+    git push origin main
+
+---
+
+## 🏃 4. Execution Workflow
+
+### Navigate & Activate
+
+    cd Internet-speed-tracker
+    source .venv/bin/activate
+
+### Run Tracker
+
+    python3 tracker.py
+
+### Stop Tracker
 
 Press:
 
-Ctrl + C
+    Ctrl + C
 
+---
 
-📊 5. Data Management
-View Live Updates
-tail -f speedtest_log.csv
-Open in Finder (macOS)
-open .
-Clear Log Data
-rm speedtest_log.csv
+## 📊 5. Data Management
 
+### View Live Logs
 
-⚠️ 6. Troubleshooting
-HTTP 403 (Forbidden)
+    tail -f speedtest_log.csv
 
-Occurs when testing too frequently.
-Solution: Script uses server rotation and a persistent client to reduce this.
+### Open Folder (macOS)
 
-Virtual Environment Issues
+    open .
 
-If you see command not found, ensure:
+### Clear Logs
 
-source .venv/bin/activate
+    rm speedtest_log.csv
 
-Your prompt should show:
+---
 
-(.venv)
-Merge Conflicts
+## ⚠️ 6. Troubleshooting
 
-Force overwrite local changes with GitHub version:
+### HTTP 403 (Forbidden)
+- Happens when tests are too frequent  
+- Script handles this using server rotation + persistent client  
 
-git reset --hard origin/main
+### Virtual Environment Issue
+Make sure environment is active:
 
+    source .venv/bin/activate
 
-📁 7. File Structure
-tracker.py → Core Python automation script
-setup.py → Installs dependencies (e.g., speedtest-cli)
-speedtest_log.csv → Generated performance logs
-.venv/ → Virtual environment (ignored by Git)
-.gitignore → Prevents unnecessary files from being uploaded
+You should see:
 
+    (.venv)
 
-💡 8. Key Logic Explanation
-Persistent Client
+### Merge Conflict Fix
 
-Initializes the Speedtest client once and reuses it to avoid being flagged as a bot.
+    git reset --hard origin/main
 
-Server Rotation
+---
 
-Every 30 seconds, selects randomly from the top 5 nearest servers to avoid rate-limiting (403 errors).
+## 📁 7. File Structure
 
-Dynamic Timing
+- `tracker.py` → Core script  
+- `setup.py` → Installs dependencies  
+- `speedtest_log.csv` → Output log file  
+- `.venv/` → Virtual environment (ignored in Git)  
+- `.gitignore` → Prevents unnecessary uploads  
 
-Adjusts sleep interval by subtracting execution time, ensuring consistent logging intervals.
+---
+
+## 💡 8. Key Logic Explanation
+
+### Persistent Client
+Reuses a single Speedtest instance to avoid being flagged as a bot.
+
+### Server Rotation
+Switches between top 5 nearest servers every 30 seconds to prevent rate limiting.
+
+### Dynamic Timing
+Adjusts sleep time based on execution duration to maintain consistent intervals.
+
+---
